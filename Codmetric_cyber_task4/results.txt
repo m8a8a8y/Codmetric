@@ -1,0 +1,99 @@
+Scan results for 192.168.1.47
+
+OS Guess based on TTL (64): Linux/Unix
+
+Open Ports:
+- Port 111: Banner: N/A
+- Port 80: Banner: HTTP/1.1 200 OK
+Date: Mon, 02 Jun 2025 13:49:51 GMT
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Content-Type: text/html
+- Port 22: Banner: SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1
+- Port 23: Banner:  #'
+- Port 21: Banner: 220 (vsFTPd 2.3.4)
+- Port 25: Banner: 220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
+- Port 53: Banner: N/A
+- Port 139: Banner: N/A
+- Port 513: Banner: N/A
+- Port 514: Banner: N/A
+- Port 445: Banner: N/A
+- Port 512: Banner: N/A
+
+Pentesting Hints:
+
+Port 111 (RPCbind / Portmapper):
+  1. Check for open RPC services that can be abused for enumeration or DoS.
+  2. Attempt to identify exported services.
+  References:
+   - https://www.sans.org/reading-room/whitepapers/threats/exploitation-rpc-service-technical-overview-35572
+
+Port 80 (HTTP):
+  1. Enumerate directories/files with DirBuster, Gobuster, or Nikto.
+  2. Scan for outdated CMS or web apps (WordPress, Joomla, Drupal).
+  3. Test for injection vulnerabilities: SQLi, XSS, Command Injection.
+  4. Look for sensitive data exposure in responses.
+  References:
+   - https://portswigger.net/web-security
+   - https://www.owasp.org/index.php/Top_10-2017_A1-Injection
+
+Port 22 (SSH):
+  1. Attempt brute force using Hydra, Medusa, or Ncrack.
+  2. Check for user enumeration vulnerabilities (CVE-2018-15473).
+  3. Identify outdated SSH versions for known exploits.
+  4. Check for weak SSH keys or default credentials.
+  References:
+   - https://www.offensive-security.com/metasploit-unleashed/ssh-login-bruteforce/
+   - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-15473
+
+Port 23 (Telnet):
+  1. Telnet transmits data unencrypted—intercept with Wireshark.
+  2. Try brute forcing credentials.
+  3. Telnet is deprecated but often left enabled—test for open Telnet services.
+  References:
+   - https://www.offensive-security.com/metasploit-unleashed/telnet/
+   - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0617
+
+Port 21 (FTP Control):
+  1. Test anonymous login and weak credentials.
+  2. Look for writable directories or file upload points.
+  3. Enumerate users if possible.
+  References:
+   - https://www.offensive-security.com/metasploit-unleashed/ftp-exploitation/
+   - https://www.exploit-db.com/docs/english/18204-ftp-brute-force.txt
+
+Port 25 (SMTP):
+  1. Check for open relay vulnerabilities.
+  2. Attempt email spoofing and phishing simulations.
+  3. Look for default or weak credentials on mail servers.
+  References:
+   - https://www.sans.org/white-papers/338/
+   - https://www.offensive-security.com/metasploit-unleashed/smtp/
+
+Port 53 (DNS):
+  1. Test for DNS zone transfer vulnerabilities.
+  2. Enumerate subdomains using DNS brute forcing.
+  3. Look for DNS cache poisoning risks.
+  References:
+   - https://www.offensive-security.com/metasploit-unleashed/dns/
+   - https://www.owasp.org/index.php/DNS_Rebinding
+
+Port 139 (NetBIOS/SMB):
+  1. Test for SMBv1 vulnerabilities (EternalBlue, CVE-2017-0144).
+  2. Enumerate shares and user accounts.
+  3. Check for null sessions.
+  References:
+   - https://docs.microsoft.com/en-us/security-updates/securitybulletins/2017/ms17-010
+   - https://www.offensive-security.com/metasploit-unleashed/smb/
+
+Port 514 (Syslog):
+  1. Check if syslog server accepts remote logs (possible log poisoning).
+
+Port 445 (Microsoft-DS (SMB over TCP)):
+  1. Same as port 139 for SMB vulnerabilities.
+  2. Check for open shares and null sessions.
+  3. Scan for recent exploits (EternalBlue).
+  References:
+   - https://www.offensive-security.com/metasploit-unleashed/smb/
+   - https://docs.microsoft.com/en-us/security-updates/securitybulletins/2017/ms17-010
